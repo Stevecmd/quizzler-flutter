@@ -8,7 +8,7 @@ class Quizzler extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
-        body: SafeArea(
+        body: SafeArea( //Always use a safe area to avoid overflow
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: QuizPage(),
@@ -25,6 +25,8 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper = []; //We keep track of the tally of crosses and ticks, List<icon> enables us to use icons
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,6 +64,14 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
+                setState((){
+                  scoreKeeper.add(
+                  Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ),
+                );
+                });
               },
             ),
           ),
@@ -80,11 +90,21 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
+                setState((){
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                });
               },
             ),
           ),
         ),
-        //TODO: Add a Row here as your score keeper
+        Row(
+          children: scoreKeeper,
+        )
       ],
     );
   }
